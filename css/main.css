@@ -966,6 +966,8 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 	background: #313131;
 	position: relative;
 	height: 100%;
+	transition: width 1.2s ease-in-out;
+	width: 0;
 }
 .skill-bars li .progress span {
 	position: absolute;
@@ -1011,6 +1013,10 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 .skill-bars li .percent90  { width: 90%; }
 .skill-bars li .percent95  { width: 95%; }
 .skill-bars li .percent100 { width: 100%; }
+
+.skill-bars.animate .progress {
+	width: var(--progress-width);
+}
 
 
 /** 
@@ -1242,6 +1248,7 @@ header .logo a {
 	padding: 15px 0;
 	line-height: 16px;
 	border: none;
+	transition: color 0.3s ease, padding-left 0.3s ease;
 }
 .main-navigation li a:hover {
 	color: #FF0077;
@@ -1327,6 +1334,7 @@ header .logo a {
 	margin-left: auto;
 	margin-right: auto;
 	text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+	animation: fadeInDown 1s ease-out;
 }
 .intro-content h5 {
 	color: #cc005f;
@@ -1346,6 +1354,7 @@ header .logo a {
 	letter-spacing: .2rem;
 	color: #FFFFFF;
 	text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+	animation: fadeInUp 1s ease-out 0.5s backwards;
 }
 .intro-content .intro-position span {
 	display: inline-block;
@@ -1791,6 +1800,7 @@ header .logo a {
 	padding: 0;
 	position: relative;
 	overflow: hidden;
+	transition: transform 0.3s ease-out;
 }
 #portfolio .folio-item img {
 	vertical-align: middle;
@@ -2601,3 +2611,89 @@ p.sub-A {
 	margin-bottom: 10px;
 }
 /*# sourceMappingURL=main.css.map */
+
+/* Fade in animation for sections */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover effect for portfolio items */
+#portfolio .folio-item {
+  // ... existing properties ...
+  transition: transform 0.3s ease-out;
+}
+
+#portfolio .folio-item:hover {
+  transform: translateY(-5px);
+}
+
+/* Smooth transition for navigation links */
+.main-navigation li a {
+  // ... existing properties ...
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+/* Enhanced button hover effects */
+.button {
+  // ... existing properties ...
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Skill bars animation */
+.skill-bars li .progress {
+  // ... existing properties ...
+  transition: width 1.2s ease-in-out;
+  width: 0;
+}
+
+.skill-bars.animate .progress {
+  // This will be triggered by JavaScript
+  width: var(--progress-width);
+}
+
+/* Enhanced intro section animations */
+.intro-content h1 {
+  // ... existing properties ...
+  animation: fadeInDown 1s ease-out;
+}
+
+.intro-content .intro-position {
+  // ... existing properties ...
+  animation: fadeInUp 1s ease-out 0.5s backwards;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

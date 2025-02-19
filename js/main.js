@@ -201,6 +201,10 @@
        	'scrollTop': $target.offset().top
       }, 800, 'swing', function () {
       	window.location.hash = target;
+        // Add a flash effect to the target section
+        $target.addClass('flash').delay(1000).queue(function(){
+          $(this).removeClass('flash').dequeue();
+        });
       });
 
   	});  
@@ -289,3 +293,45 @@
 	});		
 
 })(jQuery);
+
+// Add this after the existing document ready function
+$(document).ready(function() {
+  // Fade in elements as they come into view
+  const fadeElements = document.querySelectorAll('.fade-in');
+  
+  const fadeInObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  fadeElements.forEach(element => {
+    fadeInObserver.observe(element);
+  });
+
+  // Animate skill bars when they come into view
+  const skillBars = document.querySelector('.skill-bars');
+  
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate');
+        // Set the width for each progress bar
+        entry.target.querySelectorAll('.progress').forEach(progress => {
+          const percent = progress.parentElement.querySelector('span').textContent;
+          progress.style.setProperty('--progress-width', percent);
+        });
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  if (skillBars) {
+    skillObserver.observe(skillBars);
+  }
+});
