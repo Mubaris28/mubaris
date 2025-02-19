@@ -29,6 +29,92 @@
 	================================================== -->
 	<link rel="icon" type="image/png" href="favicon.png">
 
+	<!-- EmailJS -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+	<script type="text/javascript">
+		(function () {
+			emailjs.init("user_Qj6AmhWGwZBxBgbUGCFbF");
+		})();
+	</script>
+
+	<!-- Additional CSS for modern design trends -->
+	<style>
+		/* Minimalistic Design Enhancements */
+		.intro-content {
+			opacity: 0;
+			transform: translateY(20px);
+			animation: fadeInUp 1s ease forwards;
+		}
+
+		@keyframes fadeInUp {
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		/* Micro-interactions */
+		.button.stroke {
+			transition: all 0.3s ease;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.button.stroke:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+		}
+
+		.button.stroke::after {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: -100%;
+			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+			transition: 0.5s;
+		}
+
+		.button.stroke:hover::after {
+			left: 100%;
+		}
+
+		/* Creative Scrolling Effects */
+		.fade-in {
+			opacity: 0;
+			transform: translateY(30px);
+			transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+		}
+
+		.fade-in.visible {
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		/* Smooth section transitions */
+		section {
+			transition: transform 0.5s ease, opacity 0.5s ease;
+		}
+	</style>
+
+	<!-- Additional scripts for animations -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			// Intersection Observer for fade-in elements
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('visible');
+					}
+				});
+			}, { threshold: 0.1 });
+
+			// Observe all fade-in elements
+			document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+		});
+	</script>
+
 </head>
 
 <body id="top">
@@ -591,26 +677,25 @@
 			<div class="col-twelve">
 
 				<!-- form -->
-				<form name="contactForm" id="contactForm" method="post" action="">
+				<form name="contactForm" id="contactForm">
 					<fieldset>
-
 						<div class="form-field">
-							<input name="contactName" type="text" id="contactName" placeholder="Name" value=""
-								minlength="2" required="">
+							<input name="from_name" type="text" id="contactName" placeholder="Name" value=""
+								minlength="2" required aria-required="true">
 						</div>
 						<div class="form-field">
-							<input name="contactEmail" type="email" id="contactEmail" placeholder="Email" value=""
-								required="">
+							<input name="from_email" type="email" id="contactEmail" placeholder="Email" value=""
+								required aria-required="true">
 						</div>
 						<div class="form-field">
-							<input name="contactSubject" type="text" id="contactSubject" placeholder="Subject" value="">
+							<input name="subject" type="text" id="contactSubject" placeholder="Subject" value="">
 						</div>
 						<div class="form-field">
-							<textarea name="contactMessage" id="contactMessage" placeholder="message" rows="10"
-								cols="50" required=""></textarea>
+							<textarea name="message" id="contactMessage" placeholder="Message" rows="10" cols="50"
+								required aria-required="true" minlength="15"></textarea>
 						</div>
 						<div class="form-field">
-							<button class="submitform">Submit</button>
+							<button type="submit" class="submitform">Submit</button>
 							<div id="submit-loader">
 								<div class="text-loader">Sending...</div>
 								<div class="s-loader">
@@ -620,7 +705,6 @@
 								</div>
 							</div>
 						</div>
-
 					</fieldset>
 				</form> <!-- Form End -->
 
@@ -725,6 +809,7 @@
 	<script src="js/jquery-2.1.3.min.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/main.js"></script>
+	<script src="js/contact.js"></script>
 
 </body>
 

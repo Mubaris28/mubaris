@@ -2406,6 +2406,7 @@ header .logo a {
 	top: 1.8rem;
 	width: 100%;
 	text-align: center;
+	margin-bottom: 3rem;
 }
 #submit-loader .text-loader {
 	display: none;
@@ -2696,4 +2697,46 @@ p.sub-A {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Add these styles for form validation */
+#contactForm input.error,
+#contactForm textarea.error {
+    border-color: #FF0077;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+#message-success,
+#message-warning {
+    display: none;
+    background: #151515;
+    padding: 24px 20px;
+    margin-bottom: 36px;
+    width: 100%;
+    border-radius: 4px;
+}
+
+#message-warning {
+    background: rgba(255, 0, 0, 0.1);
+    color: #ff0000;
+}
+
+#message-success {
+    background: rgba(0, 255, 0, 0.1);
+    color: #00ff00;
+}
+
+#submit-loader {
+    display: none;
+    position: relative;
+    left: 0;
+    top: 1.8rem;
+    width: 100%;
+    text-align: center;
 }

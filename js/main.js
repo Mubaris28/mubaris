@@ -221,51 +221,52 @@
 	------------------------------------------------------ */
 
 	/* local validation */
-	$('#contactForm').validate({
+	$('#contactForm').on('submit', function(e) {
+		e.preventDefault();
 
-		/* submit via ajax */
-		submitHandler: function(form) {
+		var sLoader = $('#submit-loader');
+		var messageSuccess = $('#message-success');
+		var messageWarning = $('#message-warning');
+		
+		// Clear previous messages
+		messageSuccess.fadeOut();
+		messageWarning.fadeOut();
 
-			var sLoader = $('#submit-loader');
+		$.ajax({
+			type: "POST",
+			url: "inc/sendEmail.php",
+			data: $(this).serialize(),
+			beforeSend: function() {
+				sLoader.fadeIn();
+			},
+			success: function(response) {
+				try {
+					const data = JSON.parse(response);
+					sLoader.fadeOut();
+					
+					if (data.status === 'success') {
+						// Message was sent
+						$('#contactForm').fadeOut();
+						messageSuccess.html('<i class="fa fa-check"></i>' + data.message).fadeIn();
+					} else {
+						// There was an error
+						messageWarning.html(data.message).fadeIn();
+					}
+				} catch (e) {
+					messageWarning.html("Something went wrong. Please try again.").fadeIn();
+				}
+			},
+			error: function() {
+				sLoader.fadeOut();
+				messageWarning.html("Something went wrong. Please try again.").fadeIn();
+			}
+		});
+	});
 
-			$.ajax({      	
-
-		      type: "POST",
-		      url: "inc/sendEmail.php",
-		      data: $(form).serialize(),
-		      beforeSend: function() { 
-
-		      	sLoader.fadeIn(); 
-
-		      },
-		      success: function(msg) {
-
-	            // Message was sent
-	            if (msg == 'OK') {
-	            	sLoader.fadeOut(); 
-	               $('#message-warning').hide();
-	               $('#contactForm').fadeOut();
-	               $('#message-success').fadeIn();   
-	            }
-	            // There was an error
-	            else {
-	            	sLoader.fadeOut(); 
-	               $('#message-warning').html(msg);
-		            $('#message-warning').fadeIn();
-	            }
-
-		      },
-		      error: function() {
-
-		      	sLoader.fadeOut(); 
-		      	$('#message-warning').html("Something went wrong. Please try again.");
-		         $('#message-warning').fadeIn();
-
-		      }
-
-	      });     		
-  		}
-
+	// Add form validation
+	$('#contactForm input, #contactForm textarea').on('input', function() {
+		$(this).removeClass('error');
+		$('#message-warning').fadeOut();
 	});
 
 
